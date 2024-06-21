@@ -6,7 +6,8 @@ import { prefecturesOptions } from "../utils/prefectures";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { validationSchema } from "../utils/validationSchema";
 import { times } from "../utils/times";
-
+import { HOST_IP } from "..config.ts"
+ 
 interface OrderfirmForm {
   orderName: string;
   email: string;
@@ -53,7 +54,7 @@ const Order_cconfirm: React.FC = () => {
     console.log(formData);
     //ここにjson送信を入れる
     const response = await axios.post(
-      "http://192.168.16.175:8080/ec-202404c/users/register",
+      `http://${HOST_IP}:8080/ec-202404c/users/register`,
       formData
     );
     console.log(response);

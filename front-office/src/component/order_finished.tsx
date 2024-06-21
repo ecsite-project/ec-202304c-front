@@ -1,6 +1,7 @@
 import React from 'react'
 
 const Order_finished: React.FC = () => {
+  
   return (
     <>
     <h1>注文完了しました</h1>
