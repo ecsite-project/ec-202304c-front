@@ -34,18 +34,30 @@ const CreditCardInfo: React.FC = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    // フォーム送信処理
-    console.log('Payment Method:', paymentMethod);
-    console.log('Card Details:', cardDetails);
-    console.log('Terms Accepted:', termsAccepted);
-    console.log('Billing Option:', billingOption);
+    
+    // console.log('Payment Method:', paymentMethod);
+    
+    // console.log('Terms Accepted:', termsAccepted);
+    // console.log('Billing Option:', billingOption);
 
-    const response = await axios.post(
-      `http://${HOST_IP}192.168.16.175:8080/ec-202404c/confirm`,
-      cardDetails
-    );
-    console.log("rsponse" + response);
+    try {
+      const response = await axios.post(
+        `http://${HOST_IP}:8080/order/card`,  // エンドポイントを修正
+        { card: cardDetails }  // サーバー側で期待される形式にデータを調整
+        
+      );
+      console.log('Card Details:', cardDetails);
+      console.log('Response:', response.data);
+      
+      // 他の処理を追加する場合はここに記述
+      
+    } catch (error) {
+      console.error('Error:', error);
+      // エラー処理を追加する場合はここに記述
+    }
   };
+
+  
 
   return (
     <div className="flex items-center justify-center w-screen min-h-screen bg-gray-100 text-gray-800 p-8">

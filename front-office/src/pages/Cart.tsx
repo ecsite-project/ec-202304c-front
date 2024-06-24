@@ -131,7 +131,7 @@ const Cart: React.FC = () => {
               </div>
             </div>
           </div>
-          <button
+           <button
             className="inline-block rounded-lg bg-gray-800 hover:bg-gray-900 px-8 py-3 text-center text-sm font-semibold text-white outline-none ring-gray-300 transition duration-100 focus-visible:ring active:bg-gray-600 md:text-base"
             onClick={handleProceedToOrder}
           >
@@ -139,9 +139,9 @@ const Cart: React.FC = () => {
           </button>
         </div>
         <LoginModal show={showModal} onClose={() => setShowModal(false)} />
-      </div>
     </>
   );
 };
+  
 
 export default Cart;
