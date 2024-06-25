@@ -138,12 +138,8 @@ const Cart: React.FC = () => {
             注文に進む
           </button>
         </div>
-<<<<<<< HEAD
-        <LoginModal show={showModal} onClose={() => setShowModal(false)} />
-=======
       </div>
       <LoginModal show={showModal} onClose={() => setShowModal(false)} />
->>>>>>> ddc2491390eef92fd9619437c828504b01562471
     </>
   );
 };
