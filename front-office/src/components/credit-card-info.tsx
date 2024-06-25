@@ -41,6 +41,7 @@ const CreditCardInfo: React.FC = () => {
     // console.log('Billing Option:', billingOption);
 
     try {
+<<<<<<< HEAD
       const response = await axios.post(
         `http://${HOST_IP}:8080/order/card`,  // エンドポイントを修正
         { card: cardDetails }  // サーバー側で期待される形式にデータを調整
@@ -54,6 +55,21 @@ const CreditCardInfo: React.FC = () => {
     } catch (error) {
       console.error('Error:', error);
       // エラー処理を追加する場合はここに記述
+=======
+        const response = await axios.post(
+          `http://${HOST_IP}:8080/ec-202404c/order/card`,
+          cardDetails,
+          {
+            headers: {
+              'Content-Type': 'application/json', // ヘッダーにContent-Typeを設定
+            },
+            withCredentials: true, // クッキーをサーバーに送信するために必要
+          }
+        );
+      console.log("response: ", response.data);
+    } catch (error) {
+      console.error("Error during form submission: ", error);
+>>>>>>> ddc2491390eef92fd9619437c828504b01562471
     }
   };
 
