@@ -7,7 +7,7 @@ import { IoPersonOutline } from "react-icons/io5";
 import LoginModal from "../LoginModal"; // モーダルコンポーネントのインポート
 import { getAccessToken, decodeToken, isLoggedIn } from "../../utils/authUtils";
 import { getCartInfo } from "../../pages/Cart";
-import { HOST_IP } from "../../config";
+import { BACK_IP } from "../../config";
 import Price from "../Price";
 import { ECsiteContext } from "../../contexts";
 
@@ -78,7 +78,7 @@ const Navbar: React.FC<NavbarProps> = ({ username, setUsername }) => {
       const token = getAccessToken();
       if (token) {
         await axios.post(
-          `http://${HOST_IP}:8080/ec-202404c/auth/signout`,
+          `http://${BACK_IP}:8080/ec-202404c/auth/signout`,
           {},
           {
             headers: {

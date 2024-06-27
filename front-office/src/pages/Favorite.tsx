@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { getAccessToken } from "../utils/authUtils";
 import Footer from "../components/layout/Footer";
-import { HOST_IP } from "../config";
+import { BACK_IP } from "../config";
 import ItemCardList from "../components/ItemCardList";
 import PreviewSetList from "../components/PreviewSetList";
 import Loading from "../components/layout/Loading";
@@ -17,7 +17,10 @@ const Favorite: React.FC = () => {
     "down"
   );
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
-  const [imagePosition, setImagePosition] = useState({ top: "59%", left: "59%" });
+  const [imagePosition, setImagePosition] = useState({
+    top: "59%",
+    left: "59%",
+  });
 
   useEffect(() => {
     const getFavoriteAsync = async () => {
@@ -27,7 +30,7 @@ const Favorite: React.FC = () => {
         return;
       }
       const response = await axios.get(
-        `http://${HOST_IP}:8080/ec-202404c/favorites`,
+        `http://${BACK_IP}:8080/ec-202404c/favorites`,
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -38,7 +41,7 @@ const Favorite: React.FC = () => {
       setItemsFavorite(response.data.items);
 
       const response2 = await axios.get(
-        `http://${HOST_IP}:8080/ec-202404c/favorites/forpreview`,
+        `http://${BACK_IP}:8080/ec-202404c/favorites/forpreview`,
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -58,13 +61,15 @@ const Favorite: React.FC = () => {
   };
 
   const handleImageClick = (imagePath: string) => {
-    setSelectedImage(`http://${HOST_IP}:9090/img/` + imagePath);
+    setSelectedImage(`http://${BACK_IP}:9090/img/` + imagePath);
   };
 
   const moveImageToClickPosition = (e: React.MouseEvent<HTMLDivElement>) => {
     const rect = e.currentTarget.getBoundingClientRect();
-    const isOutsideWidth = e.clientX - rect.left > 1000 || e.clientX - rect.left < 300;
-    const isOutsideHeight = e.clientY - rect.top > 400 || e.clientY - rect.top < 210;
+    const isOutsideWidth =
+      e.clientX - rect.left > 1000 || e.clientX - rect.left < 300;
+    const isOutsideHeight =
+      e.clientY - rect.top > 400 || e.clientY - rect.top < 210;
     if (isOutsideWidth || isOutsideHeight) {
       // If click is outside the Carousel width or height, reset position
       setImagePosition({ top: "59%", left: "59%" });
@@ -106,8 +111,9 @@ const Favorite: React.FC = () => {
               >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
-                  className={`h-4 w-4 mr-1 transition-transform transform ${isCartVisible ? "rotate-180" : "rotate-0"
-                    }`}
+                  className={`h-4 w-4 mr-1 transition-transform transform ${
+                    isCartVisible ? "rotate-180" : "rotate-0"
+                  }`}
                   viewBox="0 0 11 10"
                   fill="currentColor"
                   onClick={toggleCartVisibility}
@@ -126,7 +132,7 @@ const Favorite: React.FC = () => {
                       width: "100%",
                       display: "flex",
                       justifyContent: "center",
-                      animation: "rollDown 1.5s ease-out"
+                      animation: "rollDown 1.5s ease-out",
                     }}
                   >
                     <div
@@ -141,9 +147,18 @@ const Favorite: React.FC = () => {
                   <div
                     className="relative mt-3"
                     onClick={moveImageToClickPosition}
-                    style={{ cursor: "pointer", animation: "rollDown 1s ease-out" }}
+                    style={{
+                      cursor: "pointer",
+                      animation: "rollDown 1s ease-out",
+                    }}
                   >
-                    <div style={{ width: '60%', maxWidth: '900px', margin: '0 auto' }}>
+                    <div
+                      style={{
+                        width: "60%",
+                        maxWidth: "900px",
+                        margin: "0 auto",
+                      }}
+                    >
                       {selectedImage && (
                         <div className="absolute inset-0 flex justify-center items-center">
                           <img
@@ -169,11 +184,10 @@ const Favorite: React.FC = () => {
                               transform: "translateY(630%)",
                               top: imagePosition.top,
                               left: `calc(${imagePosition.left} - 55px)`,
-                              zIndex: '40',
+                              zIndex: "40",
                             }}
                           ></div>
                         </div>
-
                       )}
                     </div>
                     <Carousel />
@@ -183,7 +197,7 @@ const Favorite: React.FC = () => {
                       width: "100%",
                       display: "flex",
                       justifyContent: "center",
-                      animation: "rollDown 1s ease-out"
+                      animation: "rollDown 1s ease-out",
                     }}
                   >
                     <div
@@ -193,7 +207,10 @@ const Favorite: React.FC = () => {
                       クリックしてプレビューするセットを入れ替える
                     </div>
                   </div>
-                  <div className="pb-3" style={{ animation: "rollDown 1s ease-out" }}>
+                  <div
+                    className="pb-3"
+                    style={{ animation: "rollDown 1s ease-out" }}
+                  >
                     <PreviewSetList
                       items={itemsPreview}
                       onImageClick={handleImageClick}

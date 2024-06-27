@@ -12,14 +12,12 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { validationSchema } from "../utils/validationSchema";
 import { orderSchema } from "../utils/orderSchema";
 import { useNavigate } from "react-router-dom";
-import { HOST_IP } from "../config";
+import { BACK_IP } from "../config";
 import { times } from "../utils/times";
 import { getAccessToken, decodeToken, isLoggedIn } from "../utils/authUtils";
 import LoginModal from "../components/LoginModal";
 import { CartTop } from "../pages/Cart";
-import CartItem from '../components/CartItem';
-
-
+import CartItem from "../components/CartItem";
 
 interface OrderConfirmForm {
   orderId: number;
@@ -52,7 +50,6 @@ const OrderConfirm: React.FC = () => {
     resolver: zodResolver(orderSchema),
   });
 
-
   const [loading, setLoading] = useState(false);
 
   const [order, setOrder] = useState<any[]>([]);
@@ -60,9 +57,11 @@ const OrderConfirm: React.FC = () => {
   const [showModal, setShowModal] = useState<boolean>(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const [buttonColor, setButtonColor] = useState('bg-gray-800');
+  const [buttonColor, setButtonColor] = useState("bg-gray-800");
   const [isCartVisible, setIsCartVisible] = useState(false);
-  const [triangleDirection, setTriangleDirection] = useState<'down' | 'up'>('down');
+  const [triangleDirection, setTriangleDirection] = useState<"down" | "up">(
+    "down"
+  );
 
   useEffect(() => {
     const today = new Date();
@@ -86,7 +85,7 @@ const OrderConfirm: React.FC = () => {
           return;
         }
         const response = await axios.get(
-          `http://${HOST_IP}:8080/ec-202404c/cart/user/${userInfo.userid}`
+          `http://${BACK_IP}:8080/ec-202404c/cart/user/${userInfo.userid}`
         );
         setOrder(response.data);
       } catch (error) {
@@ -100,7 +99,7 @@ const OrderConfirm: React.FC = () => {
   useEffect(() => {
     const fetchCartItems = async () => {
       try {
-        setButtonColor('bg-gray-500')
+        setButtonColor("bg-gray-500");
         const token = getAccessToken();
         if (!token) {
           setShowModal(true);
@@ -112,11 +111,13 @@ const OrderConfirm: React.FC = () => {
           setShowModal(true);
           return;
         }
-        const response = await axios.get(`http://${HOST_IP}:8080/ec-202404c/cart/user/${userInfo.userid}`);
+        const response = await axios.get(
+          `http://${BACK_IP}:8080/ec-202404c/cart/user/${userInfo.userid}`
+        );
         setCartItems(response.data.itemList);
-        console.log(response.data);  // デバッグ用に追加
+        console.log(response.data); // デバッグ用に追加
       } catch (error) {
-        console.error('Error fetching cart items:', error);
+        console.error("Error fetching cart items:", error);
       }
     };
 
@@ -127,15 +128,17 @@ const OrderConfirm: React.FC = () => {
     try {
       const token = getAccessToken();
       const userInfo = decodeToken(token);
-      await axios.delete(`http://${HOST_IP}:8080/ec-202404c/cart/delete`, {
+      await axios.delete(`http://${BACK_IP}:8080/ec-202404c/cart/delete`, {
         data: {
           orderItemId: orderItemId,
-          userId: userInfo?.userid
-        }
+          userId: userInfo?.userid,
+        },
       });
-      setCartItems(prevItems => prevItems.filter(item => item.id !== orderItemId));
+      setCartItems((prevItems) =>
+        prevItems.filter((item) => item.id !== orderItemId)
+      );
     } catch (error) {
-      console.error('Error deleting cart item:', error);
+      console.error("Error deleting cart item:", error);
     }
   };
 
@@ -181,22 +184,19 @@ const OrderConfirm: React.FC = () => {
 
     console.log(formData);
     const response = await axios.post(
-      `http://${HOST_IP}:8080/ec-202404c/order`,
+      `http://${BACK_IP}:8080/ec-202404c/order`,
       formData
     );
     // 成功
     if (response.status === 200) {
       if (formData.paymentMethodId === "1") {
-        navigate('/complete');
+        navigate("/complete");
       } else {
         navigate("/credit-card-info");
       }
-
     } else {
       <p>エラーが発生しました！</p>;
     }
-
-
   };
 
   const handleBackClick = () => {
@@ -229,12 +229,14 @@ const OrderConfirm: React.FC = () => {
   // クリック時に表示・非表示を切り替える関数
   const toggleCartVisibility = () => {
     setIsCartVisible(!isCartVisible);
-    setTriangleDirection(triangleDirection === 'down' ? 'up' : 'down');
+    setTriangleDirection(triangleDirection === "down" ? "up" : "down");
   };
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100" style={{ paddingTop:'50px',transform:' translateY(-28px)'}}>
-
+    <div
+      className="flex flex-col items-center justify-center min-h-screen bg-gray-100"
+      style={{ paddingTop: "50px", transform: " translateY(-28px)" }}
+    >
       <div className="container mx-auto flex justify-center flex-col">
         <div
           className="flex items-center justify-center cursor-pointer bg-blue-gray-500 text-white p-2 rounded hover:underline mx-40 hover:bg-blue-gray-600"
@@ -242,7 +244,9 @@ const OrderConfirm: React.FC = () => {
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
-            className={`h-4 w-4 mr-1 transition-transform transform ${isCartVisible ? 'rotate-180' : 'rotate-0'}`}
+            className={`h-4 w-4 mr-1 transition-transform transform ${
+              isCartVisible ? "rotate-180" : "rotate-0"
+            }`}
             viewBox="0 0 11 10"
             fill="currentColor"
             onClick={toggleCartVisibility}
@@ -252,11 +256,11 @@ const OrderConfirm: React.FC = () => {
               fill="currentColor"
             />
           </svg>
-          <span className="text-center">
-            カート表示する
-          </span>
+          <span className="text-center">カート表示する</span>
         </div>
-        {isCartVisible && <CartTop cartItems={cartItems} handleDelete={handleDelete} />}
+        {isCartVisible && (
+          <CartTop cartItems={cartItems} handleDelete={handleDelete} />
+        )}
       </div>
 
       <div className="w-full sm:w-4/5 lg:w-3/5 mt-20 mb-20">
@@ -267,7 +271,10 @@ const OrderConfirm: React.FC = () => {
                 ご注文情報の入力
               </h2>
               <form className="mt-10" onSubmit={handleSubmit(onSubmit)}>
-                <label htmlFor="orderName" className="block text-xs font-semibold text-gray-600 uppercase">
+                <label
+                  htmlFor="orderName"
+                  className="block text-xs font-semibold text-gray-600 uppercase"
+                >
                   お名前
                 </label>
                 <input
@@ -315,14 +322,11 @@ const OrderConfirm: React.FC = () => {
                   <button
                     type="button"
                     onClick={async () => {
-
-                      await fetchAddress(Number(watch("postcode")))
+                      await fetchAddress(Number(watch("postcode")));
                       trigger("prefecture");
                       trigger("municipalities");
                       trigger("address");
-                    }
-                    }
-
+                    }}
                     disabled={loading}
                     className="ml-4 w-48 bg-gray-800 py-3 px-6 rounded-sm text-white uppercase font-medium focus:outline-none hover:bg-gray-700 hover:shadow-none"
                   >
@@ -426,7 +430,11 @@ const OrderConfirm: React.FC = () => {
                   type="date"
                   id="deliveryDate"
                   {...register("deliveryDate")}
-                  min={new Date(new Date().setDate(new Date().getDate() + 2)).toISOString().split("T")[0]}
+                  min={
+                    new Date(new Date().setDate(new Date().getDate() + 2))
+                      .toISOString()
+                      .split("T")[0]
+                  }
                   className="block w-full py-3 px-1 mt-2 text-gray-800 appearance-none border-b-2 border-gray-100 focus:text-gray-500 focus:outline-none focus:border-gray-200"
                 />
                 <br />
@@ -466,7 +474,6 @@ const OrderConfirm: React.FC = () => {
                             <input
                               type="radio"
                               {...field}
-
                               className="sr-only peer"
                               value="2"
                               id="answer_american-express-card"
@@ -489,7 +496,6 @@ const OrderConfirm: React.FC = () => {
                             <input
                               type="radio"
                               {...field}
-
                               className="sr-only peer"
                               value="2"
                               id="answer_master-card"
@@ -534,7 +540,6 @@ const OrderConfirm: React.FC = () => {
                             <input
                               type="radio"
                               {...field}
-
                               className="sr-only peer"
                               defaultChecked
                               value="2"
@@ -558,7 +563,6 @@ const OrderConfirm: React.FC = () => {
                             <input
                               type="radio"
                               {...field}
-
                               className="sr-only peer"
                               defaultChecked
                               value="1"
@@ -582,7 +586,9 @@ const OrderConfirm: React.FC = () => {
                       </>
                     )}
                   />
-                  {errors.paymentMethod && <p>{errors.paymentMethod.message}</p>}
+                  {errors.paymentMethod && (
+                    <p>{errors.paymentMethod.message}</p>
+                  )}
                 </div>
                 <br />
 
@@ -590,22 +596,24 @@ const OrderConfirm: React.FC = () => {
                   <button
                     type="submit"
                     //disabled={isSubmitting}
-                    className={`relative px-6 py-2 ${buttonColor} text-white rounded-sm focus:outline-none overflow-hidden group` }
-                    onClick={() => setButtonColor('bg-gray-500')}
-                    style={{width:'24%'}}
+                    className={`relative px-6 py-2 ${buttonColor} text-white rounded-sm focus:outline-none overflow-hidden group`}
+                    onClick={() => setButtonColor("bg-gray-500")}
+                    style={{ width: "24%" }}
                   >
                     <span className="absolute top-0 left-0 w-0 h-0 transition-all duration-200 border-t-2 border-gray-700 group-hover:w-full ease"></span>
                     <span className="absolute bottom-0 right-0 w-0 h-0 transition-all duration-200 border-b-2 border-gray-700 group-hover:w-full ease"></span>
                     <span className="absolute top-0 left-0 w-full h-0 transition-all duration-300 delay-200 bg-gray-700 group-hover:h-full ease"></span>
                     <span className="absolute bottom-0 left-0 w-full h-0 transition-all duration-300 delay-200 bg-gray-700 group-hover:h-full ease"></span>
                     <span className="absolute inset-0 w-full h-full duration-300 delay-300 bg-gray-900 opacity-0 group-hover:opacity-100"></span>
-                    <span className="relative transition-colors duration-300 delay-200 group-hover:text-white ease">注文</span>
+                    <span className="relative transition-colors duration-300 delay-200 group-hover:text-white ease">
+                      注文
+                    </span>
                   </button>
                   <button
                     type="reset"
                     className="px-6 py-2 bg-gray-500 text-white rounded-sm focus:outline-none hover:bg-gray-400"
                     onClick={handleBackClick}
-                    style={{width:'27%'}}
+                    style={{ width: "27%" }}
                   >
                     トップへ戻る
                   </button>

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { HOST_IP } from "../config";
+import { IMG_IP } from "../config";
 import Price from "./Price";
 
 interface ItemProps {
@@ -17,10 +17,10 @@ const Item: React.FC<ItemProps> = ({ item, onImageClick }) => {
       onClick={handleCardClick}
       className="relative max-w-[19%] rounded overflow-hidden shadow-lg m-4 border-2 border-gray-300 transition ease-out duration-500 hover:border-gray-600 hover:shadow-lg group block cursor-pointer"
     >
-      <div className='bg-teal-100 m-1 mx-1 py-3 rounded-sm overflow-hidden'>
+      <div className="bg-teal-100 m-1 mx-1 py-3 rounded-sm overflow-hidden">
         <img
           className="w-full h-auto object-cover transform hover:scale-110 transition duration-300"
-          src={`http://${HOST_IP}:9090/img/` + item.imagePath}
+          src={`http://${IMG_IP}:9090/img/` + item.imagePath}
           alt={item.name}
         />
       </div>

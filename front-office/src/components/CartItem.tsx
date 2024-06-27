@@ -1,6 +1,6 @@
-import React from 'react';
-import { HOST_IP } from '../config';
-import Price from './Price';
+import React from "react";
+import { IMG_IP } from "../config";
+import Price from "./Price";
 
 interface CartItemProps {
   cartItem: any;
@@ -14,23 +14,39 @@ const CartItem: React.FC<CartItemProps> = ({ cartItem, onDelete }) => {
         <div className="flex items-center space-x-4 my-3">
           <figure className="w-40 h-40 overflow-hidden">
             <img
-              src={`http://${HOST_IP}:9090/img/${cartItem.item.imagePath}`}
+              src={`http://${IMG_IP}:9090/img/${cartItem.item.imagePath}`}
               alt={cartItem.item.name}
               className="rounded-md"
             />
           </figure>
         </div>
-        <div style={{ width: '20%', marginLeft: '10px' }}>
-          <div className="block text-center text-md font-bold font-oswald" style={{ textAlign: 'left' }}>
+        <div style={{ width: "20%", marginLeft: "10px" }}>
+          <div
+            className="block text-center text-md font-bold font-oswald"
+            style={{ textAlign: "left" }}
+          >
             {cartItem.item.name}
           </div>
-          <div className="text-center font-oswald" style={{ textAlign: 'left' }}>
-            {`Size: `}<span className='font-semibold'>{`${cartItem.size}`}</span>
+          <div
+            className="text-center font-oswald"
+            style={{ textAlign: "left" }}
+          >
+            {`Size: `}
+            <span className="font-semibold">{`${cartItem.size}`}</span>
           </div>
         </div>
 
-        <div className="text-center w-1/4 font-medium font-oswald"><span className="text-xl font-semibold"><Price amount={(cartItem.item.price * cartItem.quantity).toFixed(0)} /></span></div>
-        <div className="text-center w-1/4 font-oswald"><span className='text-2xl font-semibold'>{`${cartItem.quantity}`}</span>個</div>
+        <div className="text-center w-1/4 font-medium font-oswald">
+          <span className="text-xl font-semibold">
+            <Price
+              amount={(cartItem.item.price * cartItem.quantity).toFixed(0)}
+            />
+          </span>
+        </div>
+        <div className="text-center w-1/4 font-oswald">
+          <span className="text-2xl font-semibold">{`${cartItem.quantity}`}</span>
+          個
+        </div>
 
         <div className="text-center w-1/4">
           <a

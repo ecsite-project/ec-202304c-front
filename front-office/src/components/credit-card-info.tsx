@@ -1,7 +1,7 @@
 import axios from "axios";
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { HOST_IP } from "../config";
+import { BACK_IP } from "../config";
 
 const CreditCardInfo: React.FC = () => {
   const [paymentMethod, setPaymentMethod] = useState<string>("paypal");
@@ -65,7 +65,7 @@ const CreditCardInfo: React.FC = () => {
 
     try {
       const response = await axios.post(
-        `http://${HOST_IP}:8080/ec-202404c/order/card`,
+        `http://${BACK_IP}:8080/ec-202404c/order/card`,
         cardDetails,
         {
           headers: {
@@ -116,7 +116,9 @@ const CreditCardInfo: React.FC = () => {
                   checked={paymentMethod === "credit-card"}
                   onChange={handlePaymentMethodChange}
                 />
-                <label className="text-sm font-medium ml-4">クレジットカード</label>
+                <label className="text-sm font-medium ml-4">
+                  クレジットカード
+                </label>
               </div>
               {paymentMethod === "credit-card" && (
                 <div className="grid grid-cols-2 gap-4 px-8 pb-8">
@@ -141,8 +143,8 @@ const CreditCardInfo: React.FC = () => {
                       className="text-xs font-semibold"
                       htmlFor="card_exp_month"
                     >
-                      有効期限<br/>
-                      月
+                      有効期限
+                      <br />月
                     </label>
                     <input
                       className="flex items-center h-10 border mt-1 rounded px-4 w-full text-sm"
@@ -158,8 +160,7 @@ const CreditCardInfo: React.FC = () => {
                       className="text-xs font-semibold"
                       htmlFor="card_exp_year"
                     >
-                      <br/>
-                      年
+                      <br />年
                     </label>
                     <input
                       className="flex items-center h-10 border mt-1 rounded px-4 w-full text-sm"

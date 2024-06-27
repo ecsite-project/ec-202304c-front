@@ -4,7 +4,7 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { loginSchema } from "../utils/loginSchema";
 import { Link, useNavigate } from "react-router-dom";
-import { HOST_IP } from "../config";
+import { BACK_IP } from "../config";
 
 interface SignUpForm {
   email: string;
@@ -38,10 +38,10 @@ const Login: React.FC<LoginProps> = ({ setUsername }) => {
     //ここにjson送信を入れる
     //const response = await axios.post('http://192.168.16.175:8080/ec-202404c/auth/login', formData);
     const response = await axios.post(
-      `http://${HOST_IP}:8080/ec-202404c/auth/login`,
+      `http://${BACK_IP}:8080/ec-202404c/auth/login`,
       formData
     );
-    console.log(response)
+    console.log(response);
     // 成功
     if (response.status === 200) {
       navigate("/item-list");

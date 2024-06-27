@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { HOST_IP } from "../config";
+import { IMG_IP } from "../config";
 import Price from "./Price";
 
 interface ItemProps {
@@ -20,7 +20,7 @@ const Item: React.FC<ItemProps> = ({ item }) => {
       <div className="bg-blue-gray-100 m-1 mx-1 py-3 rounded-sm overflow-hidden">
         <img
           className="w-full h-auto object-cover transform hover:scale-110 transition duration-300"
-          src={`http://${HOST_IP}:9090/img/` + item.imagePath}
+          src={`http://${IMG_IP}:9090/img/` + item.imagePath}
           alt={item.name}
         />
       </div>

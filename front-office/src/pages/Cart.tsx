@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useMemo, useContext } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import { HOST_IP } from "../config";
+import { BACK_IP } from "../config";
 import CartItem from "../components/CartItem";
 import { getAccessToken, decodeToken } from "../utils/authUtils";
 import LoginModal from "../components/LoginModal";
@@ -12,7 +12,7 @@ import EmptyCart from "../components/EmptyCart";
 export const getCartInfo = async (userId: number) => {
   try {
     const response = await axios.get(
-      `http://${HOST_IP}:8080/ec-202404c/cart/user/${userId}`
+      `http://${BACK_IP}:8080/ec-202404c/cart/user/${userId}`
     );
     return response.data.itemList;
   } catch (error) {
@@ -95,7 +95,7 @@ export const CartBottom: React.FC<{
       <button
         className="relative inline-block px-8 py-3 text-center text-sm font-semibold text-gray-600 bg-gray-100 border border-gray-100 rounded-lg shadow-inner overflow-hidden group"
         onClick={handleProceedToOrder}
-        style={{ width:'13%' }}
+        style={{ width: "13%" }}
       >
         <span className="absolute top-0 left-0 w-0 h-0 transition-all duration-200 border-t-2 border-gray-600 group-hover:w-full ease"></span>
         <span className="absolute bottom-0 right-0 w-0 h-0 transition-all duration-200 border-b-2 border-gray-600 group-hover:w-full ease"></span>
@@ -131,7 +131,7 @@ const Cart: React.FC = () => {
           return;
         }
         const response = await axios.get(
-          `http://${HOST_IP}:8080/ec-202404c/cart/user/${userInfo.userid}`
+          `http://${BACK_IP}:8080/ec-202404c/cart/user/${userInfo.userid}`
         );
         setCartItems(response.data.itemList);
         console.log(response.data); // デバッグ用に追加
@@ -147,7 +147,7 @@ const Cart: React.FC = () => {
     try {
       const token = getAccessToken();
       const userInfo = decodeToken(token);
-      await axios.delete(`http://${HOST_IP}:8080/ec-202404c/cart/delete`, {
+      await axios.delete(`http://${BACK_IP}:8080/ec-202404c/cart/delete`, {
         data: {
           orderItemId: orderItemId,
           userId: userInfo?.userid,
